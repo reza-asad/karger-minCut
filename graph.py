@@ -17,7 +17,7 @@ class graph():
 	# graph.
 	def add_node(self, node):
 		if node in self.graph:
-			print 'The node already exists'
+			print "{} already exists".format(node)
 		else:
 			self.graph[node] = set()
 	
@@ -30,16 +30,28 @@ class graph():
 			# update edge_list
 			self.edge_list.append({v,w})
 		else:
-			print "At leat one of the nodes does not exist"
+			print "At leat one of the nodes in {} does not exist".format((v,w))
 
 	# input: an exisiting node
 	def drop_node(self, node):
 		if node not in self.graph:
-			print "The node does not exist"
+			print "node {} does not exist".format(node)
 		else:
-			#for n in self.graph[node]:
-
+			for adjacent_node in self.graph[node]:
+				self.graph[adjacent_node].remove(node)
+				self.edge_list.remove({node,adjacent_node})
 			del self.graph[node]
+
+	# input: an existing edge
+	def drop_edge(self, edge):
+		if edge not in self.edge_list:
+			print "edge {} does not exist".format(edge)
+		else:
+			self.edge_list.remove(edge)
+			node1 = edge.pop()
+			node2 = edge.pop()
+			self.graph[node1].remove(node2)
+			self.graph[node2].remove(node1)
 
 ########################Main###############################
 # data 
@@ -47,5 +59,7 @@ data = {1:{2,3}, 2:{1,4}, 3: {1}, 4: {2}}
 g = graph(data)
 g.add_node(9)
 g.add_edge(3,9)
-#g.drop_node(9)
+g.drop_node(1)
+g.add_node(3)
+g.drop_edge({3,9})
 print g.edge_list
