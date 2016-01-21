@@ -53,6 +53,8 @@ class graph():
 			self.graph[node1].remove(node2)
 			self.graph[node2].remove(node1)
 
+	def pick_random_edge(self):
+		return random.choice(self.edge_list)
 ########################Main###############################
 # data 
 data = {1:{2,3}, 2:{1,4}, 3: {1}, 4: {2}}
@@ -61,5 +63,5 @@ g.add_node(9)
 g.add_edge(3,9)
 g.drop_node(1)
 g.add_node(3)
-g.drop_edge({3,9})
-print g.edge_list
+#g.drop_edge({3,9})
+print g.pick_random_edge()
