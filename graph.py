@@ -1,10 +1,16 @@
 # Reza Asad
-# Karger Algorithm to find the min cut of a graph
+# Basic graph
 # Jan 28th, 2016
 #########################Algorithms######################
+import random
+
 class graph():
 	def __init__(self, data):
 		self.graph = data
+		self.edge_list = []
+		for key, value_list in self.graph.iteritems():
+			for value in value_list:
+				self.edge_list.append((key, value))
 	
 	# input: a node that currently does not exits in the 
 	# graph.
@@ -20,6 +26,8 @@ class graph():
 		if v in self.graph and w in self.graph:
 			self.graph[v].append(w)
 			self.graph[w].append(v)
+			# update edge_list
+			self.edge_list.append((v,w))
 		else:
 			print "At leat one of the nodes does not exist"
 
@@ -29,4 +37,4 @@ data = {1:[2,3], 2:[1,4], 3:[], 4:[]}
 g = graph(data)
 g.add_node(9)
 g.add_edge(3,9)
-print g.graph
+print g.edge_list
