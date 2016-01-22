@@ -30,8 +30,12 @@ class mincut_problem(graph):
 
 
 ######################## Main ###############################
-# data 
-data = {1:{2:1,4:1}, 2:{1:1,4:1, 3:1}, 3: {2:1, 4:1}, 4: {1:1, 2:1, 3:1}}
-
-g = mincut_problem(data)
-print g.compute_mincut()
+# Lets run this for some numbe rof trials
+num_trials = 20
+count = 0
+for i in range(num_trials):
+	data = {1:{2:1,4:1}, 2:{1:1,4:1, 3:1}, 3: {2:1, 4:1}, 4: {1:1, 2:1, 3:1}}
+	g = mincut_problem(data)
+	if g.compute_mincut() == 2:
+		count += 1
+print float(count)/num_trials
