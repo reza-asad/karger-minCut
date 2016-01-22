@@ -13,7 +13,7 @@ class mincut_problem(graph):
 		node1_adjacent = self.graph[node1]
 		self.drop_node(node1)
 		if node2 in node1_adjacent:
-			del node1_adjacent[node2]
+			node1_adjacent.remove(node2)
 		for node in node1_adjacent:
 			self.add_edge(node, node2)
 
@@ -34,7 +34,7 @@ class mincut_problem(graph):
 num_trials = 20
 count = 0
 for i in range(num_trials):
-	data = {1:{2:1,4:1}, 2:{1:1,4:1, 3:1}, 3: {2:1, 4:1}, 4: {1:1, 2:1, 3:1}}
+	data = {1:{2,4}, 2:{1, 4, 3}, 3: {2, 4}, 4: {1, 2, 3}}
 	g = mincut_problem(data)
 	if g.compute_mincut() == 2:
 		count += 1

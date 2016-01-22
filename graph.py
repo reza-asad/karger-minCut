@@ -19,18 +19,14 @@ class graph():
 		if node in self.graph:
 			print "{} already exists".format(node)
 		else:
-			self.graph[node] = {}
+			self.graph[node] = set()
 	
 	# input: a pair of nodes from the list of existing
 	# nodes.
 	def add_edge(self,v,w):
 		if v in self.graph and w in self.graph:
-			if w in self.graph[v]:
-				self.graph[v][w] += 1
-				self.graph[w][v] += 1
-			else:
-				self.graph[v][w] = 1
-				self.graph[w][v] = 1
+			self.graph[v].add(w)
+			self.graph[w].add(v)
 			# update edge_list
 			if v < w:
 				self.edge_list.append((v,w))
@@ -45,7 +41,7 @@ class graph():
 			print "node {} does not exist".format(node)
 		else:
 			for adjacent_node in self.graph[node]:
-				del self.graph[adjacent_node][node]
+				self.graph[adjacent_node].remove(node)
 				if node < adjacent_node:
 					self.edge_list = filter(lambda x: x != (node, adjacent_node), self.edge_list)
 				else:
@@ -60,18 +56,16 @@ class graph():
 			self.edge_list = filter(lambda x: x != edge, self.edge_list)
 			node1 = edge[0]
 			node2 = edge[1]
-			del self.graph[node1][node2]
-			del self.graph[node2][node1]
+			self.graph[node1].remove(node2)
+			self.graph[node2].remove(node1)
 
 	def pick_random_edge(self):
 		return random.choice(self.edge_list)
 ######################## Main ###############################
-# data 
-data = {1:{2:1,3:1}, 2:{1:1,4:2}, 3: {1:1}, 4: {2:2}}
+data = {1:{2,4}, 2:{1, 4, 3}, 3: {2, 4}, 4: {1, 2, 3}}
+
 g = graph(data)
-g.add_edge(3,2)
-g.add_edge(3,2)
-g.add_node(9)
-#g.drop_node(2)
-g.drop_edge((2,3))
-print g.edge_list
+g.drop_node(1)
+g.add_edge(3,4)
+g.drop_node(1)
+print g.graph
